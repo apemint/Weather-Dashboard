@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+</head>
+
+<body>
+
+    <!---------Heading------------------------------->
+    <div class="container-fluid bg-dark">
+        <br>
+        <h1 style="text-align: center; color:white">Weather Dashboard</h1>
+        <br>
+
+    </div>
+    <!----------End Heading-------------------------->
+
+    <!---------Container Divs----------------------->
+    <div class="container-fluid">
+
+        <div class="row">
+            <!----------------side bar with search and cities----------------------------->
+            <div class="col-4">
+                <!------------Search bar---------------------->
+                <h3>Search for a City:</h3>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="City Name" id="city-search">
+                    <button type="button" class="btn btn-primary" id="search-button">Search</button>
+                </div>
+                <!----------------Searched City List----------------------->
+                <div class="card" style="width: 18rem;">
+                    <ul class="list-group list-group-flush">
+                        <!---<li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Vestibulum at eros</li>-->
+                    </ul>
+                </div>
+            </div>
+            <!--------------------------main weather column------------------------------->
+            <div class="col-8">
+                <!-----Current Weather Div/card----->
+                <div class="row">
+                    todays weather
+                </div>
+                <!--------5 day Forecast div/cards--->
+                <div class="row">
+                    5 day weather
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+    <!--------------------------------------------------------------------------
+    --------------------------------Scripts-------------------------------------
+    ---------------------------------------------------------------------------->
+
+    <!--------Jquery------->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <!--------My js--------->
+    <script src="./script.js"></script>
+
+</body>
+
+</html>
