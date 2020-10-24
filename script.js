@@ -44,7 +44,8 @@ $(document).ready(function () {
                 currentDate = timeConverter(timeStamp);
                 var lat = response.coord.lat;
                 var lon = response.coord.lon;
-               
+               let weatherIcon = response.weather[0].icon;
+                
 
                 var card = $("<div>").addClass("card w-100");
                 var cardBody = $("<div id=\"current-weather-card-body\">").addClass("card-body");
@@ -53,9 +54,10 @@ $(document).ready(function () {
                 var currentCityCard = $("<h4>").addClass("").text(currentCity + " (" + currentDate + ")");
                 var currentWindCard = $("<p>").addClass("").text("Wind: " + currentWind);
                 var currentHumidityCard = $("<p>").addClass("").text("Humidity: " + currentHumidity);
+                var currentWeatherIconCard = $("<img>").attr("src", "https://openweathermap.org/img/wn/" + weatherIcon + "@2x.png");
 
 
-                cardBody.append( currentCityCard, currentTempCard, currentHumidityCard, currentWindCard);
+                cardBody.append( currentCityCard, currentWeatherIconCard, currentTempCard, currentHumidityCard, currentWindCard);
                 card.append(cardBody);
 
                 $("#current-weather").append(card);
@@ -107,7 +109,7 @@ $(document).ready(function () {
                         var mainTempF = Math.floor((result[i].main.temp - 273.15) * 1.8 + 32) + " °F"; // get main temp from result[i] and convert from kelvin to fahrenheit
                         var weatherMain = (result[i].weather[0].main); // get main weather from results rain/cloudy/sunny etc
                         var windSpeed = Math.floor((result[i].wind.speed) * 2.237) + " MPH"; //convert wind speed from meters per sec to mph
-                        var weatherIcon = result[i].weather[0].icon;
+                        let weatherIcon = result[i].weather[0].icon;
                         var humidity = (result[i].main.humidity) + "%"
                         var timeStamp = result[i].dt;
                         timeConverter(timeStamp);
