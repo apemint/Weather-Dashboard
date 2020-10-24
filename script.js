@@ -6,10 +6,25 @@ $(document).ready(function () {
     var citySearch = $("#citysearch");
     var apiKey = "3ccb6a1b00ceec9877b2479048318e8c";
 
+
+    ////GET LOCAL into List ////
+    //////////////////////////////
+    getStorage();
+    function getStorage () {
+        $("#city-list").empty();
+        for(var i = 0; i < localStorage.length; i++) {
+            var key = localStorage.key(i);
+            var value = localStorage.getItem(key);
+            var listItem = $("<li>").addClass("list-group-item")
+            var listItemVal = listItem.text(value)
+
+            $("#city-list").append(listItemVal);
+        }
+    }
+
     ////----On button click----////
     //---------------------------//
 
-    ///NEED TO ADD ICONS TO WEATHER CARDS///
     $("#search-button").on("click", function () {
         var cityName = citySearch.val();
         getCurrentWeather(); //run current weather
@@ -78,6 +93,13 @@ $(document).ready(function () {
                     })
                     
                 };
+                saveCity();
+                getStorage();
+                function saveCity () {
+                    localStorage.setItem(cityName, response.name);
+                }
+
+                
             })
         }
 
@@ -144,5 +166,6 @@ $(document).ready(function () {
             })
 
         }
+
     })
 })
