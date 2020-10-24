@@ -4,18 +4,65 @@
 $(document).ready(function () {
 
     var citySearch = $("#citysearch");
-
+    var apiKey = "3ccb6a1b00ceec9877b2479048318e8c";
 
     ////----On button click----////
     //---------------------------//
     $("#search-button").on("click", function () {
         var cityName = citySearch.val();
-        getWeather(); ///run 5 day function
+        getCurrentWeather(); //run current weather
+        //getWeather(); ///run 5 day function
+
+        function timeConverter(timeStamp) {
+            var a = new Date(timeStamp * 1000);
+            var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            var year = a.getFullYear();
+            var month = months[a.getMonth()];
+            var date = a.getDate();
+            var time = date + ' ' + month + ' ' + year;
+            //console.log(time);
+            return time;
+        };
+      
+        function getCurrentWeather() {
+            var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+ cityName + "&appid="+ apiKey;
+
+            //Ajax call 
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function (response){
+                //console.log(response);
+                var currentTempF = Math.floor((response.main.temp - 273.15) * 1.8 + 32) + " °F";
+                var currentHumidity = response.main.humidity + "%";
+                var currentWind = Math.floor((response.wind.speed) * 2,237) + "MPH";
+                var currentCity = response.name;
+                var lat = response.coord.lat;
+                var lon = response.coord.lon;
+                
+                function uvIndex(){
+                    var uvIndexURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey;
+                    //Ajax Call
+                    $.ajax({
+                        url: uvIndexURL,
+                        method: "GET"
+                    }).then(function (response){
+                        //console.log(response);
+                        var uvIndexResponse = response.value;
+                        console.log(uvIndexResponse);
+                    })
+                    return uvIndexURL;
+                };
+                var currentUVIndex = uvIndex(lat,lon);
+                //console.log(currentUVIndex);
+            })
 
 
+        }
 
+//need to edit the css classes for the weather cards
         function getWeather() {
-            var apiKey = "3ccb6a1b00ceec9877b2479048318e8c";
+            
             var queryURL5 = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + apiKey;
 
             //Ajax call
@@ -31,16 +78,7 @@ $(document).ready(function () {
                 for (var i = 0; i < result.length; i++) {
                   
 
-                    function timeConverter(timeStamp) {
-                        var a = new Date(timeStamp * 1000);
-                        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                        var year = a.getFullYear();
-                        var month = months[a.getMonth()];
-                        var date = a.getDate();
-                        var time = date + ' ' + month + ' ' + year;
-                        //console.log(time);
-                        return time;
-                    };
+                    
                     
                     //var day = Number(result[i].dt_txt.split("-")[2].split(' ')[0]); //split out the day from dt_txt to get day for each 3 hour piece
                     //console.log(day); // logs each day 7-8 times since every 3 hours each day
@@ -83,10 +121,5 @@ $(document).ready(function () {
             })
 
         }
-
-
     })
-
-
-
 })
