@@ -28,7 +28,7 @@ $(document).ready(function () {
       
         function getCurrentWeather() {
             var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+ cityName + "&appid="+ apiKey;
-
+            $("#current-weather").empty();
             //Ajax call 
             $.ajax({
                 url: queryURL,
@@ -85,7 +85,7 @@ $(document).ready(function () {
         function getWeather() {
             
             var queryURL5 = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + apiKey;
-
+            $("#5-day-weather").empty();
             //Ajax call
             $.ajax({
                 url: queryURL5,
