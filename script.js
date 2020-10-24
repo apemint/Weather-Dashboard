@@ -11,7 +11,7 @@ $(document).ready(function () {
     $("#search-button").on("click", function () {
         var cityName = citySearch.val();
         getCurrentWeather(); //run current weather
-        //getWeather(); ///run 5 day function
+        getWeather(); ///run 5 day function
 
         function timeConverter(timeStamp) {
             var a = new Date(timeStamp * 1000);
@@ -32,32 +32,49 @@ $(document).ready(function () {
                 url: queryURL,
                 method: "GET"
             }).then(function (response){
-                //console.log(response);
+                console.log(response);
                 var currentTempF = Math.floor((response.main.temp - 273.15) * 1.8 + 32) + " °F";
                 var currentHumidity = response.main.humidity + "%";
                 var currentWind = Math.floor((response.wind.speed) * 2,237) + "MPH";
                 var currentCity = response.name;
+                let timeStamp = response.dt;
+                timeConverter(timeStamp);
+                currentDate = timeConverter(timeStamp);
                 var lat = response.coord.lat;
                 var lon = response.coord.lon;
-                
+               
+
+                var card = $("<div>").addClass("card w-100");
+                var cardBody = $("<div id=\"current-weather-card-body\">").addClass("card-body");
+
+                var currentTempCard = $("<p>").addClass("").text("Temperature: " + currentTempF);
+                var currentCityCard = $("<h4>").addClass("").text(currentCity + " (" + currentDate + ")");
+                var currentWindCard = $("<p>").addClass("").text("Wind: " + currentWind);
+                var currentHumidityCard = $("<p>").addClass("").text("Humidity: " + currentHumidity);
+
+
+                cardBody.append( currentCityCard, currentTempCard, currentHumidityCard, currentWindCard);
+                card.append(cardBody);
+
+                $("#current-weather").append(card);
+
+                uvIndex(); //run uv index
                 function uvIndex(){
                     var uvIndexURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey;
                     //Ajax Call
                     $.ajax({
                         url: uvIndexURL,
                         method: "GET"
-                    }).then(function (response){
+                    }).then(function(response){
                         //console.log(response);
                         var uvIndexResponse = response.value;
                         console.log(uvIndexResponse);
+                        var uvCard = $("<p>").addClass("").text("UV Index " + uvIndexResponse);
+                        $("#current-weather-card-body").append(uvCard);
                     })
-                    return uvIndexURL;
+                    
                 };
-                var currentUVIndex = uvIndex(lat,lon);
-                //console.log(currentUVIndex);
             })
-
-
         }
 
 //need to edit the css classes for the weather cards
