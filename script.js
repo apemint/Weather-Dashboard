@@ -8,6 +8,8 @@ $(document).ready(function () {
 
     ////----On button click----////
     //---------------------------//
+
+    ///NEED TO ADD ICONS TO WEATHER CARDS///
     $("#search-button").on("click", function () {
         var cityName = citySearch.val();
         getCurrentWeather(); //run current weather
@@ -105,6 +107,7 @@ $(document).ready(function () {
                         var mainTempF = Math.floor((result[i].main.temp - 273.15) * 1.8 + 32) + " °F"; // get main temp from result[i] and convert from kelvin to fahrenheit
                         var weatherMain = (result[i].weather[0].main); // get main weather from results rain/cloudy/sunny etc
                         var windSpeed = Math.floor((result[i].wind.speed) * 2.237) + " MPH"; //convert wind speed from meters per sec to mph
+                        var weatherIcon = result[i].weather[0].icon;
                         var humidity = (result[i].main.humidity) + "%"
                         var timeStamp = result[i].dt;
                         timeConverter(timeStamp);
@@ -115,17 +118,18 @@ $(document).ready(function () {
                         //console.log(humidity);
 
 
-                        var card = $("<div style=\"max-width: 18rem;\">").addClass("card text-white bg-primary mb-3");
+                        var card = $("<div>").addClass("card col-md-2 text-white bg-primary mb-3");
                         var cardBody = $("<div>").addClass(".day");
 
-                        var dayCard = $("<h3>").addClass(".day").text(timeConverterVal);
-                        var mainTempCard = $("<h4>").addClass("").text("Temperature: " + mainTempF);
-                        var weatherMainCard = $("<p>").addClass("").text(weatherMain);
-                        var windSpeedCard = $("<p>").addClass("").text("Wind: " + windSpeed);
-                        var humidityCard = $("<p>").addClass("").text("Humidity: " + humidity);
+                        var dayCard = $("<h3>").addClass("card-text").text(timeConverterVal);
+                        var mainTempCard = $("<h4>").addClass("card-text").text("Temp: " + mainTempF);
+                        var weatherMainCard = $("<p>").addClass("card-text").text(weatherMain);
+                        var windSpeedCard = $("<p>").addClass("card-text").text("Wind: " + windSpeed);
+                        var humidityCard = $("<p>").addClass("card-text").text("Humidity: " + humidity);
+                        var weatherIconCard = $("<img>").attr("src", "https://openweathermap.org/img/wn/" + weatherIcon + ".png").addClass("center");
 
 
-                        cardBody.append(dayCard, weatherMainCard, windSpeedCard, humidityCard, mainTempCard);
+                        cardBody.append(dayCard, weatherIconCard, weatherMainCard, windSpeedCard, humidityCard, mainTempCard);
                         card.append(cardBody);
 
                         $("#5-day-weather").append(card);

@@ -1,3 +1,10 @@
-.day {
+.card-text {
     text-align: center;
+    word-break: normal;
+}
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right:auto;
+    width:50%;
 }
